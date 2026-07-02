@@ -1,6 +1,6 @@
 <div align="center">
 
-# GATE DA — Python Mastery Console
+# Python Mastery Console
 
 **An interactive, exam-ready study console for GATE Data Science & AI aspirants**
 
