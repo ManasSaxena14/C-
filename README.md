@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🐍 GATE DA — Python Mastery Console
+# GATE DA — Python Mastery Console
 
 **An interactive, exam-ready study console for GATE Data Science & AI aspirants**
 
@@ -12,20 +12,20 @@
 
 ---
 
-## 📖 Overview
+## Overview
 
 The **GATE DA Python Mastery Console** is a beautifully designed, notebook/REPL-themed interactive study tool. It covers every Python concept, output trap, and edge case from fundamentals through Object-Oriented Programming — all structured around real GATE PYQs.
 
-### ✨ Features
+### Features
 
-- 🔬 **Interactive Code Cells** — Jupyter-style `In[]` / `Out[]` cells showing code and expected output
-- 🎯 **Real PYQs** — Verified Previous Year Questions from GATE AI 2025, GATE DA 2024 & 2026 with detailed explanations
-- 🧠 **Dry Run Tracers** — Step-by-step execution walkthroughs for complex questions
-- ✅ **MCQ / MSQ / NAT Quiz Bank** — 12 scored quizzes with instant feedback
-- 📊 **Progress Tracking** — Mark topics as done; scores persist via `localStorage`
-- 📱 **Responsive** — Mobile-friendly with a slide-in sidebar
+- **Interactive Code Cells** — Jupyter-style `In[]` / `Out[]` cells showing code and expected output
+- **Real PYQs** — Verified Previous Year Questions from GATE AI 2025, GATE DA 2024 & 2026 with detailed explanations
+- **Dry Run Tracers** — Step-by-step execution walkthroughs for complex questions
+- **MCQ / MSQ / NAT Quiz Bank** — 12 scored quizzes with instant feedback
+- **Progress Tracking** — Mark topics as done; scores persist via `localStorage`
+- **Responsive** — Mobile-friendly with a slide-in sidebar
 
-### 📚 Topics Covered
+### Topics Covered
 
 | Chapter | Title |
 |---------|-------|
@@ -39,7 +39,7 @@ The **GATE DA Python Mastery Console** is a beautifully designed, notebook/REPL-
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) v18 or higher
@@ -48,8 +48,8 @@ The **GATE DA Python Mastery Console** is a beautifully designed, notebook/REPL-
 
 ```bash
 # Clone the repo
-git clone https://github.com/ManasSaxena14/C-.git
-cd "C-"
+git clone https://github.com/ManasSaxena14/C-.git BASICS
+cd BASICS
 
 # Install dependencies
 npm install
@@ -70,7 +70,7 @@ Output is in the `dist/` folder, ready to deploy on **Vercel**, **Netlify**, **G
 
 ---
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 | Tool | Role |
 |------|------|
@@ -81,10 +81,10 @@ Output is in the `dist/` folder, ready to deploy on **Vercel**, **Netlify**, **G
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
-C-/
+BASICS/
 ├── index.html           # App entry HTML with SEO meta tags
 ├── vite.config.js       # Vite configuration
 ├── package.json         # Dependencies & scripts
@@ -97,7 +97,7 @@ C-/
 
 ---
 
-## 🎨 Design System
+## Design System
 
 The console uses a custom dark design system with CSS variables:
 
@@ -107,6 +107,6 @@ The console uses a custom dark design system with CSS variables:
 
 ---
 
-## 📄 License
+## License
 
 MIT © [Manas Saxena](https://github.com/ManasSaxena14)
