@@ -73,28 +73,83 @@ const GlobalStyle = () => (
     .pyc-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
     .pyc-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--amber-border); }
 
-    .pyc-fade-in { animation: pycFadeIn 0.35s ease both; }
-    @keyframes pycFadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .pyc-fade-in { animation: pycFadeIn 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+    @keyframes pycFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .pyc-slide-in { animation: pycSlideIn 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+    @keyframes pycSlideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
 
     .pyc-blink { animation: pycBlink 1.1s steps(1) infinite; }
     @keyframes pycBlink { 50% { opacity: 0; } }
 
-    .pyc-topic-btn { transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease; }
-    .pyc-card { transition: border-color 0.2s ease, transform 0.2s ease; }
-    .pyc-opt { transition: all 0.15s ease; cursor: pointer; }
-    .pyc-opt:hover { border-color: var(--amber-border) !important; }
-    .pyc-btn { transition: all 0.15s ease; cursor: pointer; }
-    .pyc-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
-    .pyc-btn:active { transform: translateY(0); }
+    .pyc-topic-btn {
+      transition: background 0.2s cubic-bezier(0.4,0,0.2,1), border-color 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+      border-radius: 6px;
+    }
+    .pyc-topic-btn:hover {
+      background: var(--surface-2) !important;
+      padding-left: 26px !important;
+    }
+
+    .pyc-card {
+      transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s ease;
+    }
+    .pyc-card:hover {
+      border-color: var(--border) !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18), 0 0 0 1px rgba(243,185,77,0.06);
+      transform: translateY(-1px);
+    }
+
+    .pyc-opt {
+      transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+      cursor: pointer;
+    }
+    .pyc-opt:hover {
+      border-color: var(--amber-border) !important;
+      transform: translateX(3px);
+      box-shadow: 0 2px 12px rgba(243,185,77,0.08);
+    }
+
+    .pyc-btn {
+      transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+      cursor: pointer;
+    }
+    .pyc-btn:hover {
+      filter: brightness(1.12);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    }
+    .pyc-btn:active { transform: translateY(0); box-shadow: none; }
+
     .pyc-link:hover { color: var(--amber) !important; }
 
     .pyc-badge-dot { box-shadow: 0 0 0 3px rgba(0,0,0,0.15); }
 
+    .pyc-sidebar-chapter {
+      animation: pycSlideIn 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+
+    .pyc-sidebar-topic-item {
+      transition: background 0.2s ease, padding-left 0.2s ease, color 0.2s ease;
+      border-radius: 6px;
+    }
+    .pyc-sidebar-topic-item:hover {
+      background: rgba(243,185,77,0.06) !important;
+    }
+
+    .pyc-section-enter {
+      animation: pycSectionEnter 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+    @keyframes pycSectionEnter {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     @media (max-width: 860px) {
       .pyc-sidebar {
         position: fixed !important; z-index: 45; height: 100dvh !important; top: 0 !important;
-        left: 0; transform: translateX(-105%); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
-        box-shadow: 8px 0 30px rgba(0,0,0,0.4); background: var(--bg);
+        left: 0; transform: translateX(-105%); transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+        box-shadow: 8px 0 40px rgba(0,0,0,0.5); background: var(--bg);
       }
       .pyc-sidebar.pyc-sidebar-open { transform: translateX(0); }
       .pyc-menu-btn { display: flex !important; }
@@ -102,8 +157,8 @@ const GlobalStyle = () => (
     }
     .pyc-menu-btn { display: none; }
     .pyc-backdrop {
-      display: none; position: fixed; inset: 0; background: rgba(5,7,12,0.6); backdrop-filter: blur(2px);
-      z-index: 44; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+      display: none; position: fixed; inset: 0; background: rgba(5,7,12,0.65); backdrop-filter: blur(4px);
+      z-index: 44; opacity: 0; pointer-events: none; transition: opacity 0.3s cubic-bezier(0.4,0,0.2,1);
     }
     .pyc-backdrop.pyc-backdrop-open { opacity: 1; pointer-events: auto; }
   `}</style>
@@ -428,7 +483,7 @@ const QuizSection = ({ quiz, answers, setAnswers, revealed, setRevealed, onSubmi
 const CH1_TOPICS = [
 {
   id: "print-basics", tag: "1.1",
-  title: `Output Basics — print() & Quoting Rules`,
+  title: `print() & Quoting`,
   defaultOpen: true,
   concept: `print() displays a value to the console — but whether something is even valid, and what type it becomes, depends entirely on whether it sits inside quotes. This one idea drives a huge share of 1-mark "predict the output" questions.`,
   keyPoints: [
@@ -454,7 +509,7 @@ const CH1_TOPICS = [
 },
 {
   id: "variables-memory", tag: "1.2",
-  title: `Variables & the Memory Model`,
+  title: `Variables & Memory`,
   concept: `A variable is a name bound to a value — but *how* that binding works differs sharply between C and Python, and GATE regularly probes this using id() and type().`,
   keyPoints: [
     `In C, "int x = 10;" carves out a fixed-size box named x and drops 10 directly inside it. "int *y; y = &x;" makes y store x's address.`,
@@ -474,7 +529,7 @@ const CH1_TOPICS = [
 },
 {
   id: "int-caching", tag: "1.3",
-  title: `Integer Caching Range in CPython`,
+  title: `Integer Caching`,
   concept: `For performance, CPython pre-allocates and reuses integer objects in the range -5 to 256. Any integer in this range that appears anywhere in your program shares the exact same object; integers outside it get a fresh object every time.`,
   keyPoints: [
     `Default cached range: -5 to 256 (inclusive).`,
@@ -494,7 +549,7 @@ const CH1_TOPICS = [
 },
 {
   id: "tokens-datatypes", tag: "1.4",
-  title: `Tokens & Data Types Overview`,
+  title: `Tokens & Data Types`,
   concept: `Tokens are the smallest meaningful units the Python parser breaks source code into. Data types classify what kind of value a variable holds — and since Python infers this automatically from the assigned value, it's called a dynamically typed language.`,
   keyPoints: [
     `Keywords — reserved words with fixed meaning: if, else, while, def, etc. Cannot be reused as identifiers.`,
@@ -516,7 +571,7 @@ const CH1_TOPICS = [
 },
 {
   id: "print-sep", tag: "1.5",
-  title: `print() — the sep Parameter`,
+  title: `print() sep`,
   concept: `When print() receives multiple comma-separated arguments, sep controls what gets inserted BETWEEN each one. The default is a single space. sep must be None or a string — nothing else.`,
   keyPoints: [
     `Default behaviour: print(10, 20, "hi") joins arguments with a single space.`,
@@ -546,7 +601,7 @@ const CH1_TOPICS = [
 },
 {
   id: "print-end", tag: "1.6",
-  title: `print() — the end Parameter`,
+  title: `print() end`,
   concept: `end controls what gets appended AFTER the current print() call finishes — by default this is a newline "\\n", which is why consecutive print() calls normally land on separate lines. Changing end lets you chain several print() calls onto one line.`,
   keyPoints: [
     `Default end is "\\n" — that's the entire reason each print() call normally starts a fresh line.`,
@@ -565,7 +620,7 @@ const CH1_TOPICS = [
 },
 {
   id: "list-type", tag: "1.7",
-  title: `List Data Type`,
+  title: `Lists`,
   concept: `Use a list when you need a single entity representing a group of values where insertion order must be preserved and duplicates are allowed.`,
   keyPoints: [
     `Insertion order is preserved.`,
@@ -587,7 +642,7 @@ const CH1_TOPICS = [
 },
 {
   id: "tuple-type", tag: "1.8",
-  title: `Tuple Data Type`,
+  title: `Tuples`,
   concept: `A tuple is identical to a list in behaviour except for one crucial difference: it is immutable — once created, its values can never be changed.`,
   keyPoints: [
     `Same properties as a list (ordered, heterogeneous, duplicates allowed) — except mutability.`,
@@ -607,7 +662,7 @@ const CH1_TOPICS = [
 },
 {
   id: "set-type", tag: "1.9",
-  title: `Set Data Type`,
+  title: `Sets`,
   concept: `Use a set when you need a group of unique values and insertion order doesn't matter.`,
   keyPoints: [
     `No duplicates — inserting an existing value is silently ignored.`,
@@ -640,7 +695,7 @@ const CH1_TOPICS = [
 },
 {
   id: "dict-type", tag: "1.10",
-  title: `Dictionary Data Type`,
+  title: `Dictionaries`,
   concept: `A dictionary stores key–value pairs where both the key and value are chosen by the programmer. Keys act as the lookup handle for their value.`,
   keyPoints: [
     `Keys are unique; values can repeat freely.`,
@@ -676,7 +731,7 @@ const CH1_TOPICS = [
 },
 {
   id: "frozenset-bytes", tag: "1.11",
-  title: `frozenset & bytes Data Types`,
+  title: `frozenset & bytes`,
   concept: `Both types exist to take a familiar mutable structure and freeze it: frozenset is set's immutable twin; bytes is a fixed-range, immutable, array-like sequence of raw byte values.`,
   keyPoints: [
     `frozenset(S) — identical to a set except it is immutable, so add()/remove() are unavailable.`,
@@ -697,7 +752,7 @@ const CH1_TOPICS = [
 },
 {
   id: "arithmetic-ops", tag: "1.12",
-  title: `Arithmetic Operators — /, //, %, **`,
+  title: `Arithmetic Operators`,
   concept: `Python has seven arithmetic operators. Two deserve special attention: / always performs true (floating-point) division regardless of operand types, while // performs floor division — it rounds DOWN toward negative infinity, not toward zero.`,
   keyPoints: [
     `+ Addition, - Subtraction, * Multiplication.`,
@@ -720,7 +775,7 @@ const CH1_TOPICS = [
 },
 {
   id: "string-plus-star", tag: "1.13",
-  title: `+ and * on Strings`,
+  title: `String Concatenation`,
   concept: `+ and * are overloaded for strings, but with strict type rules: + requires BOTH operands to be strings; * requires exactly one int and one string (repetition).`,
   keyPoints: [
     `+ on strings → concatenation. Both sides must be str — mixing in an int raises TypeError.`,
@@ -741,7 +796,7 @@ const CH1_TOPICS = [
 },
 {
   id: "modulus-deepdive", tag: "1.14",
-  title: `Modulus Operator — Python vs C`,
+  title: `Modulus Operator`,
   concept: `Python's % works differently from C's. The formula is a % b = a - (b * (a // b)) — and because // always floors, the RESULT of % always carries the SAME SIGN AS THE DIVISOR (b), never the sign of the dividend (a). This is the single most common modulus trap on GATE.`,
   keyPoints: [
     `Formula: a % b = a - (b * (a // b))`,
@@ -760,7 +815,7 @@ const CH1_TOPICS = [
 },
 {
   id: "precedence-assoc", tag: "1.15",
-  title: `Operator Precedence & Associativity`,
+  title: `Precedence Rules`,
   concept: `When several operators appear in one expression, precedence decides which runs first, and associativity breaks ties between operators of EQUAL precedence. GATE builds entire questions purely around this ladder.`,
   keyPoints: [
     `() highest → then ** (right-to-left, the one common exception!) → then unary +/- (right-to-left) → then *, /, //, % (left-to-right, all equal precedence) → then binary +, - (left-to-right, lowest of this group).`,
@@ -780,7 +835,7 @@ const CH1_TOPICS = [
 },
 {
   id: "relational-chaining", tag: "1.16",
-  title: `Relational Operators & Chaining`,
+  title: `Relational Chaining`,
   concept: `Python allows chained comparisons like a < b < c — and it does NOT evaluate this left-to-right the way arithmetic would. Instead it silently ANDs every adjacent pair.`,
   keyPoints: [
     `Operators: >, >=, <, <=, ==, != — all support chaining.`,
@@ -802,7 +857,7 @@ const CH1_TOPICS = [
 },
 {
   id: "logical-shortcircuit", tag: "1.17",
-  title: `Logical Operators on Non-Boolean Values`,
+  title: `Logical Operators`,
   concept: `Unlike C/Java, Python's and / or do NOT necessarily return True/False when used on non-boolean operands — they return one of the actual operand VALUES. Only "not" always yields a genuine boolean.`,
   keyPoints: [
     `Falsy values: 0, 0.0, "" (empty string), None, and empty containers ([], (), {}, set()). Everything else is truthy.`,
@@ -827,7 +882,7 @@ const CH1_TOPICS = [
 },
 {
   id: "bitwise-deepdive", tag: "1.18",
-  title: `Bitwise Operators — Full Deep Dive`,
+  title: `Bitwise Operators`,
   concept: `Bitwise operators work directly on the binary (two's-complement) representation of integers, one bit at a time — completely different machinery from the logical and/or you just saw. GATE loves this topic because a single question can quietly test binary conversion, operator semantics, AND precedence all at once.`,
   keyPoints: [
     `Applicable ONLY to int and bool. Using &, |, ^, ~, <<, >> on a float or str raises a TypeError.`,
@@ -852,7 +907,7 @@ const CH1_TOPICS = [
 },
 {
   id: "ascii-chr-ord", tag: "1.19",
-  title: `ASCII, chr(), ord() — Combined Bitwise Challenge`,
+  title: `ASCII & Encoding`,
   concept: `ord(char) converts a single character to its ASCII/Unicode code point (an int); chr(code) does the reverse. Combining these with bitwise operators — manipulating characters at the bit level — is a favourite "harder than usual" GATE pattern. This is the toughest single example across all three lecture sets, so it gets a full dry run.`,
   keyPoints: [
     `Memorize these ranges: 'A'-'Z' → 65-90, 'a'-'z' → 97-122, '0'-'9' → 48-57.`,
@@ -880,7 +935,7 @@ const CH1_TOPICS = [
 const CH2_TOPICS = [
 {
   id: "string-basics", tag: "2.1",
-  title: `String Basics, Indexing & Slicing`,
+  title: `Basics & Slicing`,
   defaultOpen: true,
   concept: `A string is an immutable, ordered sequence of characters. Indexing pulls out one character; slicing pulls out a sub-sequence — and slicing is far more forgiving of out-of-range values than indexing is.`,
   keyPoints: [
@@ -904,7 +959,7 @@ const CH2_TOPICS = [
 },
 {
   id: "string-case-whitespace", tag: "2.2",
-  title: `String Methods I — Case & Whitespace`,
+  title: `Case & Whitespace`,
   concept: `upper/lower/title/capitalize/swapcase change letter case; strip/lstrip/rstrip remove unwanted characters from the ends. Every single one of these RETURNS A NEW STRING — none of them modify the original, because strings are immutable.`,
   keyPoints: [
     `upper() → ALL CAPS.  lower() → all lowercase.`,
@@ -926,7 +981,7 @@ const CH2_TOPICS = [
 },
 {
   id: "string-search-methods", tag: "2.3",
-  title: `String Methods II — Search, Count & Replace`,
+  title: `Search & Replace`,
   concept: `find/index locate a substring; count tallies occurrences; startswith/endswith test the edges; replace swaps text. The find-vs-index distinction (how each handles "not found") is a favourite GATE trick.`,
   keyPoints: [
     `find(sub) → lowest index where sub starts, or -1 if absent. NEVER raises an error.`,
@@ -949,7 +1004,7 @@ const CH2_TOPICS = [
 },
 {
   id: "string-split-join", tag: "2.4",
-  title: `String Methods III — split() & join()`,
+  title: `split() & join()`,
   concept: `split() breaks a string apart into a list; join() glues a list back into a string, using the string it's called ON as the connecting glue.`,
   keyPoints: [
     `s.split() with no arguments splits on any run of whitespace and discards extra blanks automatically.`,
@@ -972,7 +1027,7 @@ const CH2_TOPICS = [
 },
 {
   id: "string-validate-methods", tag: "2.5",
-  title: `String Methods IV — Validation (is*)`,
+  title: `Validation (is*)`,
   concept: `The is* family inspects character composition and returns a plain True/False — every one of them returns False on an empty string.`,
   keyPoints: [
     `isalpha() → every character is a letter.  isdigit() → every character is a digit.  isalnum() → every character is a letter OR digit (no spaces/punctuation allowed).`,
@@ -993,7 +1048,7 @@ const CH2_TOPICS = [
 },
 {
   id: "string-formatting", tag: "2.6",
-  title: `String Formatting — %, .format(), f-strings`,
+  title: `String Formatting`,
   concept: `Three ways exist to build formatted output: the old % operator, .format(), and modern f-strings — which evaluate any expression directly inside { } at that exact point in the code. f-strings are GATE's favourite for output-prediction questions.`,
   keyPoints: [
     `% style: "%s scored %d" % ("Sam", 90)`,
@@ -1014,7 +1069,7 @@ const CH2_TOPICS = [
 },
 {
   id: "string-mistakes", tag: "2.7",
-  title: `Common String Mistakes & Trick Questions`,
+  title: `Common Mistakes`,
   concept: `A rapid-fire round-up of the string traps that reappear most often across GATE papers — worth a final pass on their own.`,
   keyPoints: [
     `Immutability, always: any "mutating-looking" method (upper/replace/strip...) returns a NEW string — you must reassign, e.g. s = s.upper().`,
@@ -1040,7 +1095,7 @@ const CH2_TOPICS = [
 const CH3_TOPICS = [
 {
   id: "assignment-ops", tag: "3.1",
-  title: `Assignment Operators`,
+  title: `Assignment Ops`,
   defaultOpen: true,
   concept: `Beyond plain =, Python offers augmented assignment (+=, -=, *=, ...) plus chained and multiple assignment. The subtle part: += behaves differently on mutable vs immutable objects.`,
   keyPoints: [
@@ -1064,7 +1119,7 @@ const CH3_TOPICS = [
 },
 {
   id: "membership-ops", tag: "3.2",
-  title: `Membership Operators — in / not in`,
+  title: `Membership (in/not in)`,
   concept: `in and not in test whether a value exists inside a sequence or collection — a substring test for strings, an element test for list/tuple/set, and a KEY test (not value test) for dictionaries.`,
   keyPoints: [
     `x in seq → True if x is an element of seq (or a substring, for strings).`,
@@ -1083,7 +1138,7 @@ const CH3_TOPICS = [
 },
 {
   id: "identity-ops", tag: "3.3",
-  title: `Identity Operators — is / is not`,
+  title: `Identity (is/is not)`,
   concept: `is / is not check whether two names point to the exact SAME object in memory — this is identity, not value equality. This ties directly back to id() and integer caching from Chapter 1.`,
   keyPoints: [
     `a is b is exactly equivalent to id(a) == id(b).`,
@@ -1105,7 +1160,7 @@ const CH3_TOPICS = [
 },
 {
   id: "type-conversion", tag: "3.4",
-  title: `Type Conversion — Implicit & Explicit`,
+  title: `Type Conversion`,
   concept: `Implicit conversion happens automatically when Python mixes compatible types in one expression (int widens to float). Explicit conversion is the programmer deliberately calling int(), float(), str()...`,
   keyPoints: [
     `Implicit: int + float → Python promotes the int to float first, no data loss, no crash. bool behaves as int in arithmetic (True=1, False=0).`,
@@ -1127,7 +1182,7 @@ const CH3_TOPICS = [
 },
 {
   id: "input-function", tag: "3.5",
-  title: `The input() Function`,
+  title: `input() Function`,
   concept: `input() ALWAYS returns a str, no matter what the user types — this single fact is responsible for an enormous number of real (and GATE-simulated) beginner bugs.`,
   keyPoints: [
     `input([prompt]) shows an optional prompt, waits for the user, and returns whatever was typed AS A STRING — always, with zero exceptions.`,
@@ -1147,7 +1202,7 @@ const CH3_TOPICS = [
 },
 {
   id: "conditionals", tag: "3.6",
-  title: `Conditional Statements — if / elif / else`,
+  title: `Conditionals`,
   concept: `if / if-else / if-elif-else pick which block runs, based on Boolean conditions checked top to bottom. Indentation (not braces) defines each block, and at most ONE branch of an elif-chain ever executes.`,
   keyPoints: [
     `Two valid block styles: a multi-line indented block, or a single inline block using semicolons after the colon (best for one-liners only).`,
@@ -1187,7 +1242,7 @@ const CH3_TOPICS = [
 },
 {
   id: "for-range-control", tag: "3.8",
-  title: `for Loop, range() & Loop Control`,
+  title: `for Loop & range()`,
   concept: `for iterates directly over any iterable; range() is by far the most common thing to iterate over. break/continue/pass round out the loop-control toolkit.`,
   keyPoints: [
     `for x in sequence: iterates x over every element of a list/tuple/string/set/dict/range, in order.`,
@@ -1213,7 +1268,7 @@ const CH3_TOPICS = [
 const CH4_TOPICS = [
 {
   id: "sets-creation", tag: "4.1",
-  title: `Creating Sets the Right Way`,
+  title: `Creating Sets`,
   defaultOpen: true,
   concept: `Beyond the literal {1,2,3} syntax, Python offers several other ways to build a set — and one of them hides a famous trap.`,
   keyPoints: [
@@ -1235,7 +1290,7 @@ const CH4_TOPICS = [
 },
 {
   id: "set-mutation-methods", tag: "4.2",
-  title: `add(), update(), remove() & pop() — Set Mutation`,
+  title: `Set Mutation`,
   concept: `Four core ways to change a set after it's created — each with its own rules about what kind of argument it accepts and how it fails.`,
   keyPoints: [
     `add(x) inserts exactly ONE element. Passing more than one positional argument raises TypeError.`,
@@ -1257,7 +1312,7 @@ const CH4_TOPICS = [
 },
 {
   id: "set-math", tag: "4.3",
-  title: `Set Mathematics — Union, Intersection, Difference`,
+  title: `Set Mathematics`,
   concept: `Sets support the four classic mathematical operations, each available as both a method AND a symbolic operator.`,
   keyPoints: [
     `union (| or .union()) → all elements present in EITHER set (duplicates naturally eliminated).`,
@@ -1276,7 +1331,7 @@ const CH4_TOPICS = [
 },
 {
   id: "dict-creation-patterns", tag: "4.4",
-  title: `Dictionary Creation Patterns`,
+  title: `Dict Creation`,
   concept: `Beyond the direct {k:v, ...} literal, Python offers several other ways to build a dictionary — each suited to a different situation.`,
   keyPoints: [
     `dict(key=value, ...) — keyword-style construction; keys become the keyword names (must be valid identifiers).`,
@@ -1298,7 +1353,7 @@ const CH4_TOPICS = [
 },
 {
   id: "dict-removal", tag: "4.5",
-  title: `Removing From a Dictionary`,
+  title: `Dict Removal`,
   concept: `Four different ways to remove things from a dict, each with different failure behaviour and a different return value — a favourite source of GATE distractors.`,
   keyPoints: [
     `del d[key] — removes that one pair; raises KeyError if the key doesn't exist.`,
@@ -1321,7 +1376,7 @@ const CH4_TOPICS = [
 },
 {
   id: "dict-reading-merging", tag: "4.6",
-  title: `Reading & Merging a Dictionary`,
+  title: `Reading & Merging`,
   concept: `get / keys / values / items / update / setdefault round out the dictionary toolkit — mostly about reading safely and combining two dictionaries.`,
   keyPoints: [
     `d.get(key) → returns the value, or None if absent (NEVER raises KeyError, unlike d[key]). Supply a custom fallback: d.get(key, "N/A").`,
@@ -1342,7 +1397,7 @@ const CH4_TOPICS = [
 },
 {
   id: "list-tuple-set-dict-comparison", tag: "4.7",
-  title: `List vs Tuple vs Set vs Dict — Full Comparison`,
+  title: `Collection Comparison`,
   concept: `A single reference table pulling together everything learned about the four core containers — GATE loves cross-comparison questions on exactly this.`,
   keyPoints: [
     `List [ ]: ordered, mutable, duplicates allowed, heterogeneous, indexable/sliceable.`,
@@ -1364,7 +1419,7 @@ const CH4_TOPICS = [
 const CH5_TOPICS = [
 {
   id: "why-functions", tag: "5.1",
-  title: `Why Functions? Built-in vs User-Defined`,
+  title: `Why Functions?`,
   defaultOpen: true,
   concept: `A function bundles a reusable block of code under one name, so it can be executed on demand instead of being retyped every time it's needed.`,
   keyPoints: [
@@ -1386,7 +1441,7 @@ const CH5_TOPICS = [
 },
 {
   id: "defining-calling-returns", tag: "5.2",
-  title: `Defining, Calling & Multiple Return Values`,
+  title: `Defining & Calling`,
   concept: `def introduces a function; unlike C/C++/Java (which return at most one value), Python functions can return MULTIPLE values at once, packed implicitly into a tuple.`,
   keyPoints: [
     `Syntax: def function_name(parameters): body.  Calling: result = function_name(arguments).`,
@@ -1424,7 +1479,7 @@ const CH5_TOPICS = [
 },
 {
   id: "default-arguments-trap", tag: "5.4",
-  title: `Default Arguments — and the Mutable Default Trap`,
+  title: `Default Arguments`,
   concept: `A default argument supplies a fallback value used when the caller omits that argument. The catch: the default is evaluated exactly ONCE, at function-DEFINITION time — harmless for immutable defaults, but a notorious bug source for mutable ones.`,
   keyPoints: [
     `def show(a=0, b=1): — calling show(2) uses a=2, b=1 (the default).`,
@@ -1444,7 +1499,7 @@ const CH5_TOPICS = [
 },
 {
   id: "positional-keyword-only", tag: "5.5",
-  title: `Positional-Only (/) & Keyword-Only (*) Parameters`,
+  title: `Positional & Keyword`,
   concept: `Python 3.8+ lets you FORCE certain parameters to be passed only positionally, or only by keyword, using the / and * markers in the parameter list.`,
   keyPoints: [
     `Positional-only: def f(a, b, /): — every parameter BEFORE the / can only be given positionally. f(a=1, b=2) raises TypeError.`,
@@ -1485,7 +1540,7 @@ const CH5_TOPICS = [
 },
 {
   id: "scope-global", tag: "5.7",
-  title: `Variable Scope — Local, Global & the global Keyword`,
+  title: `Variable Scope`,
   concept: `Reading a global variable from inside a function works automatically — but MODIFYING one requires explicitly declaring it global first, or Python silently creates a shadowing local variable instead.`,
   keyPoints: [
     `A variable created inside a function is LOCAL — it exists only during that call, invisible outside.`,
@@ -1506,7 +1561,7 @@ const CH5_TOPICS = [
 },
 {
   id: "nested-nonlocal", tag: "5.8",
-  title: `Nested Functions & the nonlocal Keyword`,
+  title: `Nested Functions`,
   concept: `When a function is defined INSIDE another function, it can read the outer function's variables automatically — but modifying one requires nonlocal, the middle ground between local and global.`,
   keyPoints: [
     `Three-level hierarchy in a nested function: local (this function's own vars) → enclosing/nonlocal (the outer function's vars) → global (module level).`,
@@ -1525,7 +1580,7 @@ const CH5_TOPICS = [
 },
 {
   id: "closures", tag: "5.9",
-  title: `Closures — Functions That Remember Their Scope`,
+  title: `Closures`,
   concept: `When an outer function returns an inner function, that inner function keeps a private, persistent link back to the variables of the specific outer call that created it — this is called a closure. Two separate calls to the same outer function create two completely independent closures, each with its own memory.`,
   keyPoints: [
     `Every single call to outer() creates a brand-new, independent local scope — including a brand-new copy of any variable defined there.`,
@@ -1632,7 +1687,7 @@ const CH6_TOPICS = [
 },
 {
   id: "recursion-basics", tag: "6.5",
-  title: `Recursion Basics — Base Case & the Call Stack`,
+  title: `Recursion Basics`,
   concept: `Recursion is a function calling ITSELF to solve a smaller version of the same problem. Every correct recursive function needs a base condition — without one, it recurses forever until Python's call stack overflows.`,
   keyPoints: [
     `Every recursive call pushes a new "activation record" (stack frame) onto the call stack, holding that call's own local variables and its return address.`,
@@ -1650,7 +1705,7 @@ const CH6_TOPICS = [
 },
 {
   id: "indirect-nested-recursion", tag: "6.6",
-  title: `Indirect (Mutual) & Nested Recursion`,
+  title: `Indirect & Nested`,
   concept: `Recursion isn't limited to a function calling only itself directly — TWO functions can call each other (mutual recursion), or a recursive call can be fed AS THE ARGUMENT to another recursive call (nested recursion).`,
   keyPoints: [
     `Indirect (mutual) recursion: function A calls function B, which calls function A again, and so on — the recursion loops through more than one function before returning.`,
@@ -1678,7 +1733,7 @@ const CH6_TOPICS = [
 },
 {
   id: "pyq-recursive-list-reversal", tag: "6.7",
-  title: `PYQ Spotlight — Recursive List Reversal`,
+  title: `PYQ: List Reversal`,
   concept: `A genuine GATE DA 2024 question testing whether you can recognize what a recursive function DOES just from its structure, without being told in plain English.`,
   keyPoints: [
     `Swapping D[sl] and D[s2], then moving sl forward while s2 moves backward (sl+1, s2-1), is the textbook two-pointer, in-place array-reversal pattern — just written recursively instead of with a while loop.`,
@@ -1700,7 +1755,7 @@ const CH6_TOPICS = [
 },
 {
   id: "pyq-recursive-division", tag: "6.8",
-  title: `PYQ Spotlight — Recursive Division Function`,
+  title: `PYQ: Division`,
   concept: `A genuine GATE AI 2025 question hiding a classic Python trap inside a recursion problem: the / operator silently turns integers into floats, and that float quietly rides along through every subsequent recursive call.`,
   keyPoints: [
     `(a-1)/2 uses TRUE division, so even though a starts as a clean int, the result becomes a float from the very first recursive call onward.`,
@@ -1723,7 +1778,7 @@ const CH6_TOPICS = [
 },
 {
   id: "pyq-counting-recursive-calls", tag: "6.9",
-  title: `PYQ Spotlight — Counting Recursive Calls (Complex)`,
+  title: `PYQ: Counting Calls`,
   concept: `Every recursion question so far has asked "what value does this return?" This one asks something fundamentally harder: "how many TIMES does this function get called in total?" — i.e. how many stack frames get pushed before mystery(4) finishes. This requires building a completely separate recurrence just to count activations, not values, and it's one of the hardest, most GATE-above-level recursion skills there is.`,
   keyPoints: [
     `Define C(n) = total number of calls needed to fully compute mystery(n), including the call itself.`,
@@ -1753,7 +1808,7 @@ const CH6_TOPICS = [
 },
 {
   id: "recursion-hanoi-counting", tag: "6.10",
-  title: `Counting Recursive Calls — Tower of Hanoi`,
+  title: `Hanoi Recursion`,
   concept: `A second call-counting problem, on the single most famous recursive algorithm in computer science — reinforcing the exact skill from the previous topic on a shape GATE reuses constantly: two EQUAL-sized recursive calls per level, instead of two shrinking-by-different-amounts calls.`,
   keyPoints: [
     `Tower of Hanoi moves n disks by recursively moving the top n-1 disks out of the way, moving the largest disk, then recursively moving those n-1 disks back — two recursive calls of size n-1 at every level.`,
@@ -1781,7 +1836,7 @@ const CH6_TOPICS = [
 },
 {
   id: "recursion-permutations", tag: "6.11",
-  title: `Recursive Permutation Generation`,
+  title: `Permutation Recursion`,
   concept: `A classic, GATE-favourite recursive pattern: peel off one character at a time as the "next chosen character," and recursively permute whatever remains — the recursion tree naturally generates every possible ordering.`,
   keyPoints: [
     `At each call, try EVERY remaining character as the next one, recursing on what's left after removing exactly that character.`,
@@ -1811,7 +1866,7 @@ const CH6_TOPICS = [
 const CH7_TOPICS = [
 {
   id: "classes-objects", tag: "7.1",
-  title: `Classes & Objects — The Core Idea`,
+  title: `Classes & Objects`,
   defaultOpen: true,
   concept: `A class is a blueprint describing what data (attributes) and behaviour (methods) its instances will have; an object is one concrete instance built from that blueprint.`,
   keyPoints: [
@@ -1830,7 +1885,7 @@ const CH7_TOPICS = [
 },
 {
   id: "init-constructor-self", tag: "7.2",
-  title: `The __init__ Constructor & self`,
+  title: `__init__ & self`,
   concept: `__init__ is a special method Python calls AUTOMATICALLY every time a new object is created — its job is to initialize that object's attributes. self refers to "this particular object" inside every method.`,
   keyPoints: [
     `__init__(self, ...) runs automatically the instant ClassName(...) is called — you never call __init__ yourself.`,
@@ -1850,7 +1905,7 @@ const CH7_TOPICS = [
 },
 {
   id: "attributes-methods-practice", tag: "7.3",
-  title: `Attributes & Methods in Practice`,
+  title: `Attributes & Methods`,
   concept: `Putting it all together — a realistic class with several attributes and a method that uses them, exactly the shape GATE-style OOP questions favour.`,
   keyPoints: [
     `A method can freely use any of self's attributes to compute or print something — that's the entire point of bundling data (attributes) with behaviour (methods) in one class.`,
@@ -2055,12 +2110,12 @@ export default function App() {
             </button>
           </div>
           {CHAPTERS.map(ch => (
-            <div key={ch.id} style={{ marginBottom: 14 }}>
-              <div className="pyc-font-display" style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 8px", fontSize: 12.5, fontWeight: 700, color: chapterColors[ch.id] }}>
+            <div key={ch.id} className="pyc-sidebar-chapter" style={{ marginBottom: 14, animationDelay: `${CHAPTERS.indexOf(ch) * 60}ms` }}>
+              <div className="pyc-font-display" style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 8px", fontSize: 12.5, fontWeight: 700, color: chapterColors[ch.id], borderRadius: 6 }}>
                 <span className="pyc-font-mono" style={{ opacity: 0.7 }}>{ch.num}</span> {ch.title}
               </div>
               {ch.topics.map(t => (
-                <button key={t.id} onClick={() => scrollTo(t.id)} className="pyc-topic-btn pyc-link" style={{ display: "flex", alignItems: "center", gap: 7, width: "100%", textAlign: "left", padding: "6px 8px 6px 22px", background: "transparent", border: "none", color: doneMap[t.id] ? "var(--text-dimmer)" : "var(--text-dim)", fontSize: 12.5, cursor: "pointer", textDecoration: doneMap[t.id] ? "line-through" : "none" }}>
+                <button key={t.id} onClick={() => scrollTo(t.id)} className="pyc-topic-btn pyc-sidebar-topic-item pyc-link" style={{ display: "flex", alignItems: "center", gap: 7, width: "100%", textAlign: "left", padding: "5px 8px 5px 22px", background: "transparent", border: "none", color: doneMap[t.id] ? "var(--text-dimmer)" : "var(--text-dim)", fontSize: 12.5, cursor: "pointer", textDecoration: doneMap[t.id] ? "line-through" : "none" }}>
                   {doneMap[t.id] ? <CheckCircle2 size={12} style={{ color: "var(--teal)", flexShrink: 0 }} /> : <Circle size={12} style={{ flexShrink: 0, opacity: 0.4 }} />}
                   <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{t.title}</span>
                 </button>
@@ -2099,16 +2154,16 @@ export default function App() {
             </p>
           </div>
 
-          {CHAPTERS.map(ch => (
-            <section key={ch.id} style={{ marginBottom: 46 }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 6, borderBottom: `1px solid var(--border)`, paddingBottom: 14 }}>
+          {CHAPTERS.map((ch, ci) => (
+            <section key={ch.id} className="pyc-section-enter" style={{ marginBottom: 48, animationDelay: `${ci * 80}ms` }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 8, borderBottom: `1px solid var(--border)`, paddingBottom: 16 }}>
                 <span className="pyc-font-mono pyc-font-display" style={{ fontSize: 34, fontWeight: 700, color: chapterColors[ch.id], opacity: 0.35 }}>{ch.num}</span>
                 <div>
                   <h2 className="pyc-font-display" style={{ fontSize: 22, fontWeight: 700, margin: 0, color: "var(--text)" }}>{ch.title}</h2>
-                  <p style={{ fontSize: 13, color: "var(--text-dim)", margin: "3px 0 0 0" }}>{ch.subtitle}</p>
+                  <p style={{ fontSize: 13, color: "var(--text-dim)", margin: "4px 0 0 0", lineHeight: 1.5 }}>{ch.subtitle}</p>
                 </div>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 18 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 20 }}>
                 {ch.topics.map(t => (
                   <TopicCard key={t.id} topic={t} chapterColor={chapterColors[ch.id]} done={!!doneMap[t.id]} toggleDone={toggleDone} answers={answers} setAnswers={setAnswers} revealed={revealed} setRevealed={setRevealed} />
                 ))}
