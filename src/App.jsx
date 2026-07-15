@@ -542,8 +542,10 @@ const CH1_TOPICS = [
     `This is purely a CPython implementation detail, not a language guarantee. Never rely on it in real code — always compare values with ==; only use "is" when you specifically need identity (e.g. checking against None).`
   ],
   examples: [
-    { code: `a = 100\nb = 100\nprint(id(a) == id(b))`, output: `True    # 100 is cached — a and b point to the SAME object`, tone: "teal" },
-    { code: `x = 300\ny = 300\nprint(id(x) == id(y))`, output: `False   # 300 is outside the cache — two separate objects`, tone: "error" },
+    { code: `# Integer Caching (CPython)\n# To make Python faster, small integers are reused.\n# Cached Range: -5 to 256\n# Python creates only one object for each integer in this range.`, output: undefined },
+    { code: `# Inside the Cache (-5 to 256)\na = 100\nb = 100`, output: `Both variables point to the same object.\n\na ─┐\n   └──► [100]\nb ─┘\n\nSo,\na is b           # True\nid(a) == id(b)   # True`, note: `100 is cached — a and b point to the SAME object` },
+    { code: `# Outside the Cache\nx = 300\ny = 300`, output: `Python usually creates two different objects.\n\nx ───► [300]\n\ny ───► [300]\n\nSo,\nx == y   # True   (same value)\nx is y   # False  (different objects)`, tone: "error" },
+    { code: `# == vs is\n# == → Checks values\n# is → Checks whether both names point to the same object`, note: `GATE Tip: Use == for comparing values. Use is only to check object identity (e.g., x is None).` },
   ],
   question: { isPYQ: false, source: "Practice", marks: 1, qtype: "MCQ",
     stem: `p = 256\nq = 256\nr = 257\ns = 257\nprint(p is q, r is s)`,
@@ -554,18 +556,18 @@ const CH1_TOPICS = [
 {
   id: "tokens-datatypes", tag: "1.4",
   title: `Tokens & Data Types`,
-  concept: `Tokens are the smallest meaningful units the Python parser breaks source code into. Data types classify what kind of value a variable holds — and since Python infers this automatically from the assigned value, it's called a dynamically typed language.`,
-  keyPoints: [
-    `Keywords — reserved words with fixed meaning: if, else, while, def, etc. Cannot be reused as identifiers.`,
-    `Identifiers — programmer-chosen names for variables, functions, classes (e.g. x, myName).`,
-    `Literals — fixed values written directly in code: 10, 3.5, 'hello', True.`,
-    `Operators — symbols that perform operations: +, -, *, /, ==.`,
-    `Punctuators — structural symbols: (), {}, :, ,`,
-    `Python does not require declaring a type — the type is assigned automatically based on the value provided (dynamically typed), unlike C/Java's static typing.`,
-    `11 core built-in types: int, float, complex, bool, str, list, tuple, set, frozenset, dict, bytes (and bytearray).`
-  ],
+  concept: `What are Tokens?\nTokens = Smallest meaningful pieces of Python code.`,
+  keyPoints: [],
   examples: [
-    { code: `x = 10        # x -> Identifier, '=' -> Operator, 10 -> Literal\nif x == 10:   # 'if' -> Keyword, '==' -> Operator, ':' -> Punctuator\n    pass      # 'pass' -> Keyword`, output: undefined },
+    { code: `x = 10`, output: `This line is broken into 3 tokens:\n\nx → Identifier\n= → Operator\n10 → Literal` },
+    { code: `# Types of Tokens\n\n# 1. Keywords\n# Reserved words with a fixed meaning.\n# Examples:\n\nif, else, while, for, def, pass`, note: `❌ Cannot be used as variable names.` },
+    { code: `# 2. Identifiers\n# Names given by the programmer.\n\nx\nmarks\ntotal_1\nmyName` },
+    { code: `# 3. Literals\n# Values written directly in the code.\n\n10\n3.14\n"Hello"\nTrue` },
+    { code: `# 4. Operators\n# Perform operations.\n\n+\n-\n*\n/\n==\n=` },
+    { code: `# 5. Punctuators\n# Symbols that define program structure.\n\n( )\n{ }\n:\n,\n[ ]` },
+    { code: `# Data Types\n# A data type tells Python what kind of value it is storing.\n\nx = 10        # int\ny = 3.5       # float\nname = "Manas" # str\nflag = True   # bool` },
+    { code: `# Dynamic Typing\n# Python automatically decides the data type.\n\nx = 10      # int\nx = "Hi"    # now str`, note: `No type declaration is needed. Python is a dynamically typed language.` },
+    { code: `# Common Built-in Data Types\n# (These are the ones most commonly used in GATE.)\n\nint\nfloat\nbool\nstr\nlist\ntuple\nset\ndict` },
   ],
   question: { isPYQ: false, source: "Practice", marks: 1, qtype: "MSQ",
     stem: `In the line   total_1 = (marks1 + marks2) * 2   which of the following classifications are correct? (Select all that apply)`,
