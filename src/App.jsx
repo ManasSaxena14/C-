@@ -518,7 +518,11 @@ const CH1_TOPICS = [
     `Because integers are immutable, "x = x + 1" does NOT modify the object 10 in place — it builds a brand-new object 11 and re-points x to it. id(x) changes.`
   ],
   examples: [
-    { code: `x = 10\nprint(type(x))\nprint(id(x))\nx = x + 1\nprint(type(x))\nprint(id(x))`, output: `<class 'int'>\n1000\n<class 'int'>\n2000`, note: `type stays 'int' both times, but id changes after x = x + 1 — x now points to a completely new object; the old 10 is untouched.` },
+    { code: `// in C (Box Model)\nint x = 10;\n// A memory box is created.\n// The value 10 is stored inside the box x.\nint *y = &x;\n// y stores the address of x.`, output: undefined },
+    { code: `# Python (Reference Model)\nx = 10\n# Python creates an integer object 10 somewhere in memory.\n# x is just a label (reference) pointing to that object.\n# x ───► [10]`, output: undefined },
+    { code: `x = 10\nprint(type(x))   # <class 'int'>\nprint(id(x))     # Address (identity) of object 10`, note: `type(x) → What kind of object? (int)\nid(x) → Which object? (its memory identity)` },
+    { code: `# What happens in x = x + 1?\nx = 10\nx = x + 1`, output: `Before:\n\nx ───► [10]\n\nAfter:\n\n      [10]   (unchanged)\n\nx ───► [11]`, note: `Python does NOT change 10 into 11. Instead: Old object 10 stays unchanged. New object 11 is created. x now points to 11. So: type(x) → still int, id(x) → changes because x points to a new object.` },
+    { code: `x = 10\nprint(type(x))\nprint(id(x))\nx = x + 1\nprint(type(x))\nprint(id(x))`, output: `<class 'int'>\n1000\n<class 'int'>\n2000`, note: `Proof: type stays 'int' both times, but id changes after x = x + 1 — x now points to a completely new object; the old 10 is untouched.` },
   ],
   mistakes: [`"x = x + 1" looks like C's in-place increment, but Python silently rebinds the name to a new object each time — the original object is never mutated. This becomes critical in the very next topic (integer caching), where two independent variables can end up sharing an id purely by coincidence.`],
   question: { isPYQ: false, source: "Practice", marks: 1, qtype: "MCQ",
