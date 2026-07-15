@@ -249,7 +249,7 @@ const DryRun = ({ steps }) => {
 
 /* Question block: PYQ or Practice — MCQ / MSQ / NAT */
 const QBlock = ({ q, qid, answers, setAnswers, revealed, setRevealed }) => {
-  const state = answers[qid] || (q.qtype === "MSQ" ? [] : q.qtype === "NAT" ? "" : null);
+  const state = answers[qid] !== undefined ? answers[qid] : (q.qtype === "MSQ" ? [] : q.qtype === "NAT" ? "" : null);
   const isRevealed = !!revealed[qid];
 
   const setState = (val) => setAnswers(prev => ({ ...prev, [qid]: val }));
